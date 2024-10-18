@@ -1,26 +1,32 @@
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-canvas.width = 800;
-canvas.height = 800;
+canvas.width = window.innerWidth - 20;
+canvas.height = window.innerHeight - 20;
 
 ctx!.fillStyle = 'white';
 ctx!.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.5;
 const jumpSpeed = -10;
+const dashDistance = 100;
 let isJumping = false;
 let isGrounded = true;
+let isDashing = false;
+
 
 const player = {
-    x: 50,          // Initial X position
-    y: canvas.height - 100,  // Initial Y position (bottom of canvas)
-    width: 50,      // Player width
-    height: 100,    // Player height
-    color: 'blue',  // Player color
-    speed: 5,       // Movement speed
-    dx: 0,          // Delta X (for horizontal movement)
-    dy: 0           // Delta Y (if needed for vertical movement)
+    x: 50,                      // Initial X position
+    y: canvas.height - 100,     // Initial Y position (bottom of canvas)
+    width: 50,                  // Player width
+    height: 100,                // Player height
+    color: 'blue',              // Player color
+    speed: 5,                   // Movement speed
+    dashSpeed: 20,              // Dash speed
+    facingDirection: 'right',   // Track which direction player is facing
+    dashTargetX: 0,             // Where dash ends
+    dx: 0,                      // Delta X (for horizontal movement)
+    dy: 0                       // Delta Y (if needed for vertical movement)
 };
 
 function drawPlayer() {
@@ -29,11 +35,24 @@ function drawPlayer() {
 }
 
 function updatePlayerPosition() {
-    player.x += player.dx
-    player.y += player.dy
+    if (isDashing) {
+        if ((player.facingDirection === 'right' && player.x < player.dashTargetX) ||
+            (player.facingDirection === 'left' && player.x > player.dashTargetX)) {
+            player.x += (player.facingDirection === 'right' ? player.dashSpeed : -player.dashSpeed);
+        } else {
+            // Stop dashing when the target position is reached
+            isDashing = false;
+            player.dx = 0;  // Stop horizontal movement
+        }
+    }
 
-    if (!isGrounded) {
-        player.dy += gravity
+    if (!isDashing) {
+        player.x += player.dx;
+        player.y += player.dy;
+
+        if (!isGrounded) {
+            player.dy += gravity;
+        }
     }
 
     if (player.x < 0 ) {
@@ -74,10 +93,17 @@ gameLoop();
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') {
         player.dx = player.speed;
+        player.facingDirection = 'right';
     }
 
     if (event.key === 'ArrowLeft') {
         player.dx = -player.speed;
+        player.facingDirection = 'left';
+    }
+
+    if (event.key === 'Shift' && !isDashing) {
+        isDashing = true;
+        player.dashTargetX = player.x + (player.facingDirection === 'right' ? dashDistance : -dashDistance);
     }
 
     if (event.key === ' ') {
