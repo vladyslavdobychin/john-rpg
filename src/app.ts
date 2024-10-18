@@ -25,6 +25,7 @@ function drawPlayer() {
 
 function updatePlayerPosition() {
     player.x += player.dx
+    player.y += player.dy
 
     if (player.x < 0 ) {
         player.x = 0;
@@ -40,8 +41,8 @@ function clearCanvas() {
 }
 
 function logCurrentPlayerProperties() {
-    console.log(`Player initial position ${player.x}`);
-    console.log(`Player position difference ${player.dx}`);
+    console.log(`Player initial position x: ${player.x}, y: ${player.y}`);
+    console.log(`Player position difference dx: ${player.dx}, ${player.dy}`);
 }
 
 function gameLoop() {
@@ -63,10 +64,23 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') {
         player.dx = -player.speed
     }
+
+    if (event.key === 'ArrowUp') {
+        player.dy = -player.speed;
+    }
+
+    if (event.key === 'ArrowDown') {
+        player.dy = player.speed;
+    }
 });
 
 document.addEventListener('keyup', (event) => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         player.dx = 0;
+    }
+
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        player.dy = 0;
+        player.y = canvas.height - 100
     }
 })
