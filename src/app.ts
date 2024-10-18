@@ -1,8 +1,8 @@
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth - 20;
-canvas.height = window.innerHeight - 20;
+canvas.width = 800;
+canvas.height = 800;
 
 ctx!.fillStyle = 'white';
 ctx!.fillRect(0, 0, canvas.width, canvas.height);
@@ -26,7 +26,13 @@ function drawPlayer() {
 function updatePlayerPosition() {
     player.x += player.dx
 
+    if (player.x < 0 ) {
+        player.x = 0;
+    }
 
+    if (player.x + player.width > canvas.width) {
+        player.x = canvas.width - player.width
+    }
 }
 
 function clearCanvas() {
