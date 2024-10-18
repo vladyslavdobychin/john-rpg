@@ -7,6 +7,11 @@ canvas.height = 800;
 ctx!.fillStyle = 'white';
 ctx!.fillRect(0, 0, canvas.width, canvas.height);
 
+const gravity = 0.5;
+const jumpSpeed = -10;
+let isJumping = false;
+let isGrounded = true;
+
 const player = {
     x: 50,          // Initial X position
     y: canvas.height - 100,  // Initial Y position (bottom of canvas)
@@ -27,12 +32,22 @@ function updatePlayerPosition() {
     player.x += player.dx
     player.y += player.dy
 
+    if (!isGrounded) {
+        player.dy += gravity
+    }
+
     if (player.x < 0 ) {
         player.x = 0;
     }
 
     if (player.x + player.width > canvas.width) {
         player.x = canvas.width - player.width
+    }
+
+    if (player.y + player.height >= canvas.height) {
+        player.y = canvas.height - player.height;
+        isGrounded = true;
+        isJumping = false;
     }
 }
 
@@ -51,7 +66,7 @@ function gameLoop() {
     drawPlayer();
     logCurrentPlayerProperties();
 
-    requestAnimationFrame(gameLoop)
+    requestAnimationFrame(gameLoop);
 }
 
 gameLoop();
@@ -62,15 +77,15 @@ document.addEventListener('keydown', (event) => {
     }
 
     if (event.key === 'ArrowLeft') {
-        player.dx = -player.speed
+        player.dx = -player.speed;
     }
 
-    if (event.key === 'ArrowUp') {
-        player.dy = -player.speed;
-    }
-
-    if (event.key === 'ArrowDown') {
-        player.dy = player.speed;
+    if (event.key === ' ') {
+        if (!isJumping) {
+            player.dy = jumpSpeed;
+            isJumping = true;
+            isGrounded = false;
+        }
     }
 });
 
@@ -78,9 +93,4 @@ document.addEventListener('keyup', (event) => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         player.dx = 0;
     }
-
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        player.dy = 0;
-        player.y = canvas.height - 100
-    }
-})
+});
