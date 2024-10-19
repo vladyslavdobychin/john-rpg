@@ -47,22 +47,30 @@ export default class {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    updatePosition(gravity: number, isDashing: boolean, isGrounded: boolean, isJumping: boolean) {
-        if (isDashing) {
+    updatePosition(
+        getIsDashing: any,
+        setIsDashing: any,
+        getIsGrounder: any,
+        setIsGrounded: any,
+        getIsJumping: any,
+        setIsJumping: any,
+        gravity: number
+    ) {
+        if (getIsDashing()) {
             if ((this.facingDirection === 'right' && this.x < this.dashTargetX) ||
                 (this.facingDirection === 'left' && this.x > this.dashTargetX)) {
                 this.x += (this.facingDirection === 'right' ? this.dashSpeed : -this.dashSpeed);
             } else {
-                isDashing = false;
+                setIsDashing(false);
                 this.dx = 0;
             }
         }
 
-        if (!isDashing) {
+        if (!getIsDashing()) {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (!isGrounded) {
+            if (!getIsGrounder) {
                 this.dy += gravity;
             }
         }
@@ -77,8 +85,8 @@ export default class {
 
         if (this.y + this.height >= canvas.height) {
             this.y = canvas.height - this.height;
-            isGrounded = true;
-            isJumping = false;
+            setIsGrounded(true);
+            setIsJumping(false);
         }
     }
 }
