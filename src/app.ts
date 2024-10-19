@@ -75,8 +75,10 @@ function clearCanvas() {
 }
 
 function logCurrentPlayerProperties() {
-    console.log(`Player initial position x: ${player.x}, y: ${player.y}`);
-    console.log(`Player position difference dx: ${player.dx}, ${player.dy}`);
+    document.getElementById('x-position')!.textContent = player.x.toString();
+    document.getElementById('y-position')!.textContent = player.y.toString();
+    document.getElementById('dx-position')!.textContent = player.dx.toString();
+    document.getElementById('dy-position')!.textContent = player.dy.toString();
 }
 
 function gameLoop() {
