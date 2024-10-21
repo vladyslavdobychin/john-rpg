@@ -1,16 +1,18 @@
 import Player from "./Player";
-import { clearCanvas } from "../utils/Canvas";
+import Canvas from "../utils/Canvas";
 
 export default class Game {
     player: Player;
+    canvas: Canvas;
     private _gravity: number = 0.5;
     private _dashDistance: number = 100;
     private _isDashing: boolean = false;
     private _isGrounded: boolean = true;
     private _isJumping: boolean = false;
 
-    constructor(player: Player) {
+    constructor(player: Player, canvas: Canvas) {
         this.player = player;
+        this.canvas = canvas;
     }
 
     getGravity() {
@@ -46,7 +48,8 @@ export default class Game {
     }
 
     gameLoop(ctx: CanvasRenderingContext2D) {
-        clearCanvas(ctx);
+        this.canvas.clear();
+
         this.player.updatePosition(
             () => this.getIsDashing(),
             (value: boolean) => this.setIsDashing(value),
@@ -56,8 +59,31 @@ export default class Game {
             (value: boolean) => this.setIsJumping(value),
             () => this.getGravity());
         this.player.draw(ctx);
+
+        this.maintainCanvasBounds();
+
         this.logCurrentPlayerProperties();
+
         requestAnimationFrame(() => this.gameLoop(ctx));
+    }
+
+    maintainCanvasBounds() {
+        // Prevent out of bounds (left)
+        if (this.player.x < 0 ) {
+            this.player.x = 0;
+        }
+
+        // Prevent out of bounds (right)
+        if (this.player.x + this.player.width > this.canvas.width) {
+            this.player.x = this.canvas.width - this.player.width
+        }
+
+        // Prevent out of bound (down)
+        if (this.player.y + this.player.height >= this.canvas.height) {
+            this.player.y = this.canvas.height - this.player.height;
+            this.setIsGrounded(true);
+            this.setIsJumping(false);
+        }
     }
 
     logCurrentPlayerProperties() {

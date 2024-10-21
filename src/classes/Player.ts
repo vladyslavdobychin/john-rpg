@@ -48,13 +48,13 @@ export default class {
     }
 
     updatePosition(
-        getIsDashing: any,
-        setIsDashing: any,
-        getIsGrounder: any,
-        setIsGrounded: any,
-        getIsJumping: any,
-        setIsJumping: any,
-        getGravity: any
+        getIsDashing: () => boolean,
+        setIsDashing: (value: boolean) => void,
+        getIsGrounded: () => boolean,
+        setIsGrounded: (value: boolean) => void,
+        getIsJumping: () => boolean,
+        setIsJumping: (value: boolean) => void,
+        getGravity: () => number
     ) {
         if (getIsDashing()) {
             if ((this.facingDirection === 'right' && this.x < this.dashTargetX) ||
@@ -70,26 +70,9 @@ export default class {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (!getIsGrounder()) {
+            if (!getIsGrounded()) {
                 this.dy += getGravity();
             }
-        }
-
-        // Prevent out of bounds (left)
-        if (this.x < 0 ) {
-            this.x = 0;
-        }
-
-        // Prevent out of bounds (right)
-        if (this.x + this.width > canvas.width) {
-            this.x = canvas.width - this.width
-        }
-
-        // Prevent out of bound (down)
-        if (this.y + this.height >= canvas.height) {
-            this.y = canvas.height - this.height;
-            setIsGrounded(true);
-            setIsJumping(false);
         }
     }
 }
