@@ -15,7 +15,7 @@ export default function handleInput(player: Player, game: Game) {
 
         if (event.key === 'Shift' && !game.getIsDashing()) {
             game.setIsDashing(true);
-            player.dashTargetX = player.x + (player.facingDirection === 'right' ? game.dashDistance : -game.dashDistance);
+            player.dashTargetX = player.x + (player.facingDirection === 'right' ? game.getDashDistance() : -game.getDashDistance());
         }
 
         if (event.key === ' ') {

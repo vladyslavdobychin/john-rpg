@@ -54,7 +54,7 @@ export default class {
         setIsGrounded: any,
         getIsJumping: any,
         setIsJumping: any,
-        gravity: number
+        getGravity: any
     ) {
         if (getIsDashing()) {
             if ((this.facingDirection === 'right' && this.x < this.dashTargetX) ||
@@ -70,19 +70,22 @@ export default class {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (!getIsGrounder) {
-                this.dy += gravity;
+            if (!getIsGrounder()) {
+                this.dy += getGravity();
             }
         }
 
+        // Prevent out of bounds (left)
         if (this.x < 0 ) {
             this.x = 0;
         }
 
+        // Prevent out of bounds (right)
         if (this.x + this.width > canvas.width) {
             this.x = canvas.width - this.width
         }
 
+        // Prevent out of bound (down)
         if (this.y + this.height >= canvas.height) {
             this.y = canvas.height - this.height;
             setIsGrounded(true);

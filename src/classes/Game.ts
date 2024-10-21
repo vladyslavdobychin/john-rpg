@@ -3,14 +3,22 @@ import { clearCanvas } from "../utils/Canvas";
 
 export default class Game {
     player: Player;
-    gravity: number = 0.5;
-    dashDistance: number = 100;
+    private _gravity: number = 0.5;
+    private _dashDistance: number = 100;
     private _isDashing: boolean = false;
     private _isGrounded: boolean = true;
     private _isJumping: boolean = false;
 
     constructor(player: Player) {
         this.player = player;
+    }
+
+    getGravity() {
+        return this._gravity;
+    }
+
+    getDashDistance() {
+        return this._dashDistance;
     }
 
     getIsDashing(): boolean {
@@ -46,7 +54,7 @@ export default class Game {
             (value: boolean) => this.setIsGrounded(value),
             () => this.getIsJumping(),
             (value: boolean) => this.setIsJumping(value),
-            this.gravity);
+            () => this.getGravity());
         this.player.draw(ctx);
         this.logCurrentPlayerProperties();
         requestAnimationFrame(() => this.gameLoop(ctx));
