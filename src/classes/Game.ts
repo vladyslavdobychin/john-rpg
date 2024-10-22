@@ -15,35 +15,35 @@ export default class Game {
         this.canvas = canvas;
     }
 
-    getGravity() {
+    get gravity() {
         return this._gravity;
     }
 
-    getDashDistance() {
+    get dashDistance() {
         return this._dashDistance;
     }
 
-    getIsDashing(): boolean {
+    get isDashing(): boolean {
         return this._isDashing;
     }
 
-    setIsDashing(value: boolean) {
+    set isDashing(value: boolean) {
         this._isDashing = value;
     }
 
-    getIsGrounded(): boolean {
+    get isGrounded(): boolean {
         return this._isGrounded;
     }
 
-    setIsGrounded(value: boolean) {
+    set isGrounded(value: boolean) {
         this._isGrounded = value;
     }
 
-    getIsJumping(): boolean {
+    get isJumping(): boolean {
         return this._isJumping
     }
 
-    setIsJumping(value: boolean) {
+    set isJumping(value: boolean) {
         this._isJumping = value;
     }
 
@@ -51,13 +51,15 @@ export default class Game {
         this.canvas.clear();
 
         this.player.updatePosition(
-            () => this.getIsDashing(),
-            (value: boolean) => this.setIsDashing(value),
-            () => this.getIsGrounded(),
-            (value: boolean) => this.setIsGrounded(value),
-            () => this.getIsJumping(),
-            (value: boolean) => this.setIsJumping(value),
-            () => this.getGravity());
+            this.isDashing,
+            (value: boolean) => (this.isDashing = value),
+            this.isGrounded,
+            (value: boolean) => (this.isGrounded = value),
+            this.isJumping,
+            (value: boolean) => (this.isJumping = value),
+            this.gravity
+        );
+
         this.player.draw(ctx);
 
         this.maintainCanvasBounds();
@@ -81,8 +83,8 @@ export default class Game {
         // Prevent out of bound (down)
         if (this.player.y + this.player.height >= this.canvas.height) {
             this.player.y = this.canvas.height - this.player.height;
-            this.setIsGrounded(true);
-            this.setIsJumping(false);
+            this.isGrounded = true;
+            this.isJumping = false;
         }
     }
 
@@ -92,8 +94,8 @@ export default class Game {
         document.getElementById('dx-position')!.textContent = this.player.dx.toString();
         document.getElementById('dy-position')!.textContent = this.player.dy.toString();
         document.getElementById('facingDirection')!.textContent = this.player.facingDirection;
-        document.getElementById('isJumping')!.textContent = this.getIsJumping().toString();
-        document.getElementById('isGrounded')!.textContent = this.getIsGrounded().toString();
-        document.getElementById('isDashing')!.textContent = this.getIsDashing().toString();
+        document.getElementById('isJumping')!.textContent = this.isJumping.toString();
+        document.getElementById('isGrounded')!.textContent = this.isGrounded.toString();
+        document.getElementById('isDashing')!.textContent = this.isDashing.toString();
     }
 }

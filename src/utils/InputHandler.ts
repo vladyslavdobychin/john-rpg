@@ -13,16 +13,16 @@ export default function handleInput(player: Player, game: Game) {
             player.facingDirection = 'left';
         }
 
-        if (event.key === 'Shift' && !game.getIsDashing()) {
-            game.setIsDashing(true);
-            player.dashTargetX = player.x + (player.facingDirection === 'right' ? game.getDashDistance() : -game.getDashDistance());
+        if (event.key === 'Shift' && !game.isDashing) {
+            game.isDashing = true;
+            player.dashTargetX = player.x + (player.facingDirection === 'right' ? game.dashDistance : -game.dashDistance);
         }
 
         if (event.key === ' ') {
-            if (!game.getIsJumping()) {
+            if (!game.isJumping) {
                 player.dy = -10;
-                game.setIsJumping(true);
-                game.setIsGrounded(false);
+                game.isJumping = true;
+                game.isGrounded = false;
             }
         }
     });

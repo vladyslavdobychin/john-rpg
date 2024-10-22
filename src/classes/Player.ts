@@ -48,15 +48,15 @@ export default class {
     }
 
     updatePosition(
-        getIsDashing: () => boolean,
+        isDashing: boolean,
         setIsDashing: (value: boolean) => void,
-        getIsGrounded: () => boolean,
+        isGrounded: boolean,
         setIsGrounded: (value: boolean) => void,
-        getIsJumping: () => boolean,
+        isJumping: boolean,
         setIsJumping: (value: boolean) => void,
-        getGravity: () => number
+        gravity: number
     ) {
-        if (getIsDashing()) {
+        if (isDashing) {
             if ((this.facingDirection === 'right' && this.x < this.dashTargetX) ||
                 (this.facingDirection === 'left' && this.x > this.dashTargetX)) {
                 this.x += (this.facingDirection === 'right' ? this.dashSpeed : -this.dashSpeed);
@@ -66,12 +66,12 @@ export default class {
             }
         }
 
-        if (!getIsDashing()) {
+        if (!isDashing) {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (!getIsGrounded()) {
-                this.dy += getGravity();
+            if (!isGrounded) {
+                this.dy += gravity;
             }
         }
     }
