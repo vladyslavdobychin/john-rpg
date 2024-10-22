@@ -5,7 +5,7 @@ import Canvas from "./utils/Canvas";
 
 const canvas = new Canvas();
 
-const player = new Player({});
+const player = new Player({}, canvas);
 const game = new Game(player, canvas);
 
 handleInput(player, game);

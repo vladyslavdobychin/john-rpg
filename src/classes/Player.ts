@@ -1,3 +1,5 @@
+import Canvas from "../utils/Canvas";
+
 interface PlayerProps {
     x?: number,
     y?: number,
@@ -12,10 +14,8 @@ interface PlayerProps {
     dashTargetX?: number,
 }
 
-const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-canvas.height = window.innerHeight - 20;
-
 export default class {
+    canvas: Canvas;
     x: number;
     y: number;
     dx: number;
@@ -28,9 +28,10 @@ export default class {
     dashSpeed: number;
     dashTargetX: number;
 
-    constructor(props: PlayerProps) {
+    constructor(props: PlayerProps, canvas: Canvas) {
+        this.canvas = canvas;
         this.x = props.x ?? 50;
-        this.y = props.y ?? canvas.height - 100;
+        this.y = props.y ?? this.canvas.height - 100;
         this.dx = props.dx ?? 0;
         this.dy = props.dy ?? 0;
         this.width = props.width ?? 50;
