@@ -23,4 +23,9 @@ export default class Canvas {
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
+
+    drawCharacter(x: number, y: number, width: number, height: number, color: string) {
+        this.ctx.fillStyle = color
+        this.ctx.fillRect(x, y, width, height);
+    }
 }

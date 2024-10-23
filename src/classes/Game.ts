@@ -47,7 +47,7 @@ export default class Game {
         this._isJumping = value;
     }
 
-    gameLoop(ctx: CanvasRenderingContext2D) {
+    gameLoop() {
         this.canvas.clear();
 
         this.player.updatePosition(
@@ -60,13 +60,19 @@ export default class Game {
             this.gravity
         );
 
-        this.player.draw(ctx);
+        this.canvas.drawCharacter(
+            this.player.x,
+            this.player.y,
+            this.player.width,
+            this.player.height,
+            this.player.color
+        );
 
         this.maintainCanvasBounds();
 
         this.logCurrentPlayerProperties();
 
-        requestAnimationFrame(() => this.gameLoop(ctx));
+        requestAnimationFrame(() => this.gameLoop());
     }
 
     maintainCanvasBounds() {

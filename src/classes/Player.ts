@@ -43,11 +43,6 @@ export default class {
         this.dashTargetX = props.dashTargetX ?? 0;
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-
     updatePosition(
         isDashing: boolean,
         setIsDashing: (value: boolean) => void,

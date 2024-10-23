@@ -9,4 +9,4 @@ const player = new Player({}, canvas);
 const game = new Game(player, canvas);
 
 handleInput(player, game);
-game.gameLoop(canvas.ctx);
+game.gameLoop();
