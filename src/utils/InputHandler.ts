@@ -25,6 +25,12 @@ export default function handleInput(player: Player, game: Game) {
                 game.isGrounded = false;
             }
         }
+
+        if (event.key === 'a') {
+            if (!player.sword.isSwinging) {
+                player.sword.isSwinging = true;
+            }
+        }
     });
 
     document.addEventListener('keyup', (event) => {

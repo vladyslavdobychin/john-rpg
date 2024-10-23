@@ -60,13 +60,9 @@ export default class Game {
             this.gravity
         );
 
-        this.canvas.drawCharacter(
-            this.player.x,
-            this.player.y,
-            this.player.width,
-            this.player.height,
-            this.player.color
-        );
+        this.player.updateSword();
+
+        this.player.draw();
 
         this.maintainCanvasBounds();
 
@@ -106,5 +102,6 @@ export default class Game {
         document.getElementById('isJumping')!.textContent = this.isJumping.toString();
         document.getElementById('isGrounded')!.textContent = this.isGrounded.toString();
         document.getElementById('isDashing')!.textContent = this.isDashing.toString();
+        document.getElementById('isSwinging')!.textContent = this.player.sword.isSwinging.toString();
     }
 }

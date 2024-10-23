@@ -24,8 +24,17 @@ export default class Canvas {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
 
-    drawCharacter(x: number, y: number, width: number, height: number, color: string) {
-        this.ctx.fillStyle = color
+    draw(x: number, y: number, width: number, height: number, color: string) {
+        this.ctx.fillStyle = color;
         this.ctx.fillRect(x, y, width, height);
+    }
+
+    drawLine(x1: number, y1: number, x2: number, y2: number, color: string) {
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = 5;
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1, y1);
+        this.ctx.lineTo(x2, y2);
+        this.ctx.stroke();
     }
 }
