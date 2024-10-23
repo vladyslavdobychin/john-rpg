@@ -20,7 +20,18 @@
     </style>
 </head>
 <body>
+    <div class="log-display" style="position: absolute; left: 15px; top: 15px; display: flex; flex-direction: column; width: 150px;">
+        <div>X: <span id="x-position"></span></div>
+        <div>Y: <span id="y-position"></span></div>
+        <div>DX: <span id="dx-position"></span></div>
+        <div>DY: <span id="dy-position"></span></div>
+
+        <div>facingDirection: <span id="facingDirection"></span></div>
+        <div>isJumping: <span id="isJumping"></span></div>
+        <div>isGrounded: <span id="isGrounded"></span></div>
+        <div>isDashing: <span id="isDashing"></span></div>
+    </div>
     <canvas id="canvas"></canvas>
-    <script type="module" src="./src/app.ts"></script>
+    <script type="module" src="./src/index.ts"></script>
 </body>
 </html>
