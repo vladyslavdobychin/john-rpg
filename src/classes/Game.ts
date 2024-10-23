@@ -71,18 +71,21 @@ export default class Game {
 
     maintainCanvasBounds() {
         // Prevent out of bounds (left)
-        if (this.player.x < 0 ) {
+        if (this.player.x <= 0 ) {
             this.player.x = 0;
+            this.player.dx = 0;
         }
 
         // Prevent out of bounds (right)
-        if (this.player.x + this.player.width > this.canvas.width) {
+        if (this.player.x + this.player.width >= this.canvas.width) {
             this.player.x = this.canvas.width - this.player.width
+            this.player.dx = 0;
         }
 
         // Prevent out of bound (down)
         if (this.player.y + this.player.height >= this.canvas.height) {
             this.player.y = this.canvas.height - this.player.height;
+            this.player.dy = 0
             this.isGrounded = true;
             this.isJumping = false;
         }
