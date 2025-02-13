@@ -1,9 +1,11 @@
 import Player from "./Player";
 import Canvas from "../utils/Canvas";
+import Animation from "./Animation";
 
 export default class Game {
     player: Player;
     canvas: Canvas;
+    animation: Animation;
     private _gravity: number = 0.5;
     private _dashDistance: number = 100;
     private _isDashing: boolean = false;
@@ -13,6 +15,7 @@ export default class Game {
     constructor(player: Player, canvas: Canvas) {
         this.player = player;
         this.canvas = canvas;
+        this.animation = new Animation();
     }
 
     get gravity() {
@@ -61,11 +64,8 @@ export default class Game {
         );
 
         this.canvas.drawCharacter(
-            this.player.x,
-            this.player.y,
-            this.player.width,
-            this.player.height,
-            this.player.color
+            this.animation,
+            this.player
         );
 
         this.maintainCanvasBounds();
@@ -77,7 +77,7 @@ export default class Game {
 
     maintainCanvasBounds() {
         // Prevent out of bounds (left)
-        if (this.player.x <= 0 ) {
+        if (this.player.x <= 0) {
             this.player.x = 0;
             this.player.dx = 0;
         }

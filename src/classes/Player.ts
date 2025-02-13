@@ -7,7 +7,6 @@ interface PlayerProps {
     dy?: number,
     width?: number,
     height?: number,
-    color?: string,
     facingDirection?: 'right' | 'left',
     speed?: number,
     dashSpeed?: number,
@@ -22,7 +21,6 @@ export default class {
     dy: number;
     width: number;
     height: number;
-    color: string;
     facingDirection: 'right' | 'left';
     speed: number;
     dashSpeed: number;
@@ -34,9 +32,8 @@ export default class {
         this.y = props.y ?? this.canvas.height - 100;
         this.dx = props.dx ?? 0;
         this.dy = props.dy ?? 0;
-        this.width = props.width ?? 50;
-        this.height = props.height ?? 100;
-        this.color = props.color ?? 'blue';
+        this.width = props.width ?? 187;
+        this.height = props.height ?? 132;
         this.facingDirection = props.facingDirection ?? 'right';
         this.speed = props.speed ?? 5;
         this.dashSpeed = props.dashSpeed ?? 20;

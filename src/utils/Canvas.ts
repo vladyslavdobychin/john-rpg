@@ -1,6 +1,10 @@
+import Animation from "../classes/Animation";
+import Player from "../classes/Player";
+
 export default class Canvas {
     private canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
+
     constructor() {
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
@@ -24,8 +28,24 @@ export default class Canvas {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
 
-    drawCharacter(x: number, y: number, width: number, height: number, color: string) {
-        this.ctx.fillStyle = color
-        this.ctx.fillRect(x, y, width, height);
+    drawCharacter(animation: Animation, player: Player) {
+        this.ctx.fillStyle = 'grey';
+        this.ctx.fillRect(
+            player.x,
+            player.y,
+            player.width,
+            player.height);
+
+        this.ctx.drawImage(
+            animation.image,
+            animation.sourceX,
+            animation.sourceY,
+            animation.sourceSW,
+            animation.sourceSH,
+            player.x,
+            player.y,
+            player.width,
+            player.height
+        );
     }
 }
